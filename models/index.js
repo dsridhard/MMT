@@ -19,21 +19,21 @@ db.sequelize = sequelize;
 
 //Import models
 //Common Modules
-db.adminUser = require('./adminUser.js')(sequelize, Sequelize)
+db.adminUser = require('./users/adminUser.js')(sequelize, Sequelize)
 db.Audit_Logs = require('./audit_logs.model.js')(sequelize,Sequelize)
-db.USER = require('./user.model.js')(sequelize, Sequelize)
+db.USER = require('./users/user.model.js')(sequelize, Sequelize)
 
 //Payment Transaction Model
-db.Fare =require('./fare_details.model.js')(sequelize,Sequelize)
-db.payment = require('./payment.model.js')(sequelize, Sequelize)
-db.wallet = require('./wallets.model.js')(sequelize, Sequelize)
-db.DiscountOffers =require('./discount_offers.model.js')(sequelize,Sequelize)
+db.Fare =require('./common/fare_details.model.js')(sequelize,Sequelize)
+db.payment = require('./payment/payment.model.js')(sequelize, Sequelize)
+db.wallet = require('./payment/wallets.model.js')(sequelize, Sequelize)
+db.DiscountOffers =require('./common/discount_offers.model.js')(sequelize,Sequelize)
 //Flight Models
-db.airport = require('./airport.js')(sequelize, Sequelize)
-
+db.airport = require('./flight/airport.js')(sequelize, Sequelize)
+db.Flight = require('./flight/flight.model.js')(sequelize,Sequelize)
 //Bus Models
-db.Bus_Seat = require('./bus_seats.js')(sequelize, Sequelize)
-db.Bus_Book= require('./bus_book.model.js')(sequelize,Sequelize)
+db.Bus_Seat = require('./bus/bus_seats.js')(sequelize, Sequelize)
+db.Bus_Book= require('./bus/bus_book.model.js')(sequelize,Sequelize)
 
 //Train Model
 
