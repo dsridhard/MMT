@@ -29,6 +29,7 @@ db.payment = require('./payment/payment.model.js')(sequelize, Sequelize)
 db.wallet = require('./payment/wallets.model.js')(sequelize, Sequelize)
 db.PaymentMethod =require('./payment/paymentmethod.model')(sequelize,Sequelize)
 db.DiscountOffers =require('./common/discount_offers.model.js')(sequelize,Sequelize)
+db.Payment_Refund = require('./payment/paymentrefund.model.js')(sequelize,Sequelize)
 //Flight Models
 db.airport = require('./flight/airport.js')(sequelize, Sequelize)
 db.Flight = require('./flight/flight.model.js')(sequelize,Sequelize)
@@ -41,8 +42,8 @@ db.Bus_Book= require('./bus/bus_book.model.js')(sequelize,Sequelize)
 
 
 //Hotel Model
-
-
+db.Hotel = require('./hotel/hotel.model.js')(sequelize,Sequelize)
+db.Hotel_Book = require('./hotel/hotel_book.model.js')(sequelize,Sequelize)
 
 module.exports = db;
 
