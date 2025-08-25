@@ -22,7 +22,7 @@ db.sequelize = sequelize;
 db.adminUser = require('./users/adminUser.js')(sequelize, Sequelize)
 db.Audit_Logs = require('./audit_logs.model.js')(sequelize,Sequelize)
 db.USER = require('./users/user.model.js')(sequelize, Sequelize)
-
+db.Passenger_Info =require('./common/passengerInfo.model')(sequelize,Sequelize)
 //Payment Transaction Model
 db.Fare =require('./common/fare_details.model.js')(sequelize,Sequelize)
 db.payment = require('./payment/payment.model.js')(sequelize, Sequelize)
