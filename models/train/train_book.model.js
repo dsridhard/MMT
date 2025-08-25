@@ -1,9 +1,9 @@
-// models/BookingMaster.js
+// models/TrainBooking.js
 module.exports = (sequelize, DataTypes) => {
-  const BookingMaster = sequelize.define(
-    "BookingMaster",
+  const TrainBooking = sequelize.define(
+    "TrainBooking",
     {
-      booking_master_id: {
+      train_booking_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -12,22 +12,30 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      booking_type: {
-        type: DataTypes.ENUM("flight", "hotel", "train", "bus"),
-        allowNull: false,
-      },
-      reference_id: {
+      train_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      payment_id: {
+      class_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      status: {
+      journey_date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
+      passenger_count: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      booking_status: {
         type: DataTypes.ENUM("pending", "confirmed", "cancelled"),
         allowNull: false,
         defaultValue: "pending",
+      },
+      total_price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
       },
       created_at: {
         type: DataTypes.DATE,
@@ -36,10 +44,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "bookings_master",
-      timestamps: false, // manage created_at manually
+      tableName: "train_bookings",
+      timestamps: false, // disabling default createdAt/updatedAt
     }
   );
 
-  return BookingMaster;
+  return TrainBooking;
 };
