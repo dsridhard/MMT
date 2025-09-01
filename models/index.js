@@ -67,5 +67,10 @@ db.adminUser = require('./users/adminUser.js')(sequelize, Sequelize)
 db.USER = require('./users/user.model.js')(sequelize, Sequelize)
 db.Loyalty = require('./users/loyalty.model.js')(sequelize,Sequelize)
 
+
+
+// Import associations
+require("./associations")(db);
+
 module.exports = db;
 
