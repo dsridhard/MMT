@@ -42,7 +42,7 @@ db.PaymentMethod = require('./payment/paymentmethod.model')(sequelize, Sequelize
 db.Payment_Refund = require('./payment/paymentrefund.model.js')(sequelize, Sequelize)
 
 //Flight Models
-db.airport = require('./flight/airport.js')(sequelize, Sequelize)
+db.Airport = require('./flight/airport.js')(sequelize, Sequelize)
 db.Flight = require('./flight/flight.model.js')(sequelize, Sequelize)
 db.FlightSeat =require('./flight/flightSeat.model.js')(sequelize,Sequelize)
 db.Flight_Transaction = require('./flight/flightTransaction.model.js')(sequelize, Sequelize)
