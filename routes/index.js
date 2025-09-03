@@ -3,6 +3,10 @@ const router = express.Router();
 
 // Import individual route files
 
+// Common Routes
+const fareroutes = require("./flight/flight.routes")
+
+
 // Flight Routes 
 const flightroutes = require("./flight/flight.routes");
 const flightseatroutes = require("./flight/flightseat.routes");
@@ -18,6 +22,12 @@ const passengeroutes = require('./common/passenger_info.routes')
 
 
 // Mount them on the router
+
+
+
+// CommonRoutes
+router.use(fareroutes);
+
 
 // FlightRoutes
 router.use(flightroutes);

@@ -1,14 +1,15 @@
-const { USER } = require('../../models')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { USER: User } = require("../../models"); // 👈 fixed import
 exports.create = async (req, res) => {
     try {
-        const { full_name, email, mobile, password_hash, dob } = req.body;
+        const {user_id, full_name, email, mobile, password_hash, dob } = req.body;
 
         // hash the password before saving
         const hashedPassword = await bcrypt.hash(password_hash, 10); // saltRounds = 10
 
         const user = await User.create({
+            user_id,
             full_name,
             email,
             mobile,
@@ -50,19 +51,19 @@ exports.login = async (req, res) => {
         // generate JWT token
         const token = jwt.sign(
             { id: user.user_id, email: user.email },
-            process.env.JWT_SECRET || "mysecretkey", // keep secret in .env
+            process.env.JWT_SECRET || "mysecretkey", // put in .env
             { expiresIn: "1h" }
         );
 
         return res.status(200).json({
             message: "Login successful",
             token,
-            user: {
-                id: user.user_id,
-                full_name: user.full_name,
-                email: user.email,
-                mobile: user.mobile
-            }
+            // user: {
+            //     id: user.user_id,
+            //     full_name: user.full_name,
+            //     email: user.email,
+            //     mobile: user.mobile
+            // }
         });
     } catch (error) {
         return res.status(500).json({ error: error.message });
