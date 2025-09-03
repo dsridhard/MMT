@@ -9,7 +9,9 @@
     "start": "node server.js"
   },
   "keywords": [
-    "mmt"
+    "mmt",
+    "tourism",
+    "travel"
   ],
   "author": "sridhar",
   "license": "ISC",

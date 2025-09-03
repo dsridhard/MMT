@@ -1,4 +1,4 @@
-const { Flight_Transaction } = require("../../models")
+const { Flight_Transaction, BookingMaster } = require("../../models");
 const jwt = require("jsonwebtoken");
 // Create a new flight transaction
 exports.create = async (req, res) => {
@@ -11,10 +11,11 @@ exports.create = async (req, res) => {
 
         const token = authHeader.split(" ")[1];
         const decoded = jwt.verify(token, process.env.JWT_SECRET || "mysecretkey");
-
         const user_id = decoded.id; // ✅ comes from token
+
         const { flight_id, booking_status, total_price, passenger_count } = req.body;
 
+        // ✅ create flight transaction
         const flightTransaction = await Flight_Transaction.create({
             user_id,
             flight_id,
@@ -23,12 +24,25 @@ exports.create = async (req, res) => {
             passenger_count
         });
 
-        return res.status(201).json(flightTransaction);
+        // ✅ create booking master entry
+        const bookingMaster = await BookingMaster.create({
+            user_id,
+            booking_type: "flight",        // 👈 important to distinguish module
+            reference_id: flight_id,       // 👈 link back to flight
+            payment_id: total_price,
+            status: booking_status || "pending",
+            "created_at":""
+        });
+
+        return res.status(201).json({
+            message: "Flight booked successfully",
+            flightTransaction,
+            bookingMaster
+        });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
 };
-
 
 
 

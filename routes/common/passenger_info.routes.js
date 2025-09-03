@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const passengerInfoController = require('../../controllers/master/passenger.controller')
+const passengerInfoController = require('../../controllers/user/passenger.controller')
 
 
 router.post("/passenger", passengerInfoController.create);

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       user_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(1234),
         allowNull: false,
       },
       booking_type: {
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       reference_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(1234),
         allowNull: false,
       },
       payment_id: {
@@ -29,15 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "pending",
       },
-      created_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
+    
     },
     {
       tableName: "bookings_master",
-      timestamps: false, // manage created_at manually
+      timestamps: true, // manage created_at manually
     }
   );
 

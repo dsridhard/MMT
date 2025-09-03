@@ -1,6 +1,6 @@
 const express =require('express')
 const router = express.Router()
-const FareController = require('../../controllers/master/fare.controller')
+const FareController = require('../../controllers/common/fare.controller')
 
 
 router.post("/fare",FareController.create)
