@@ -1,5 +1,5 @@
 const { Flight } = require("../../models"); // adjust path if needed
-
+const { Op } = require('sequelize');
 exports.create = async (req, res) => {
     try {
         const {
@@ -60,3 +60,36 @@ exports.findOne = (req, res) => {
         });
     };
 };
+
+exports.searchAPI = async (req, res) => {
+    const { source_airport_code,
+        destination_airport_code,
+        airline_name,
+        departure_time,
+        arrival_time,
+        class_type, } = req.body;
+
+
+    const searchBody = await Flight.findAll({
+        where: {
+            [Op.or]:
+                [
+                    { airline_name: airline_name },
+                    { arrival_time: arrival_time },
+                    { class_type: class_type },
+                    { departure_time: departure_time },
+                    { destination_airport_code: destination_airport_code },
+                    { source_airport_code: source_airport_code }
+                ]
+
+
+        }
+    });
+    if (!searchBody) {
+        return res.status(404).json({ error: "Flight not found " })
+    }
+
+    return res.status(200).json({
+        data: searchBody
+    })
+}
