@@ -1,4 +1,4 @@
-const { Flight } = require("../../models"); // adjust path if needed
+const { Flight } = require("../../models");
 const { Op } = require('sequelize');
 exports.create = async (req, res) => {
     try {
@@ -50,16 +50,21 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    const id = (req, res) => {
-        Flight.findByPk(id).then((flight) => {
+    const { id } = req.params; // Correctly destructure 'id' from req.params
+
+    Flight.findByPk(id) // Use the 'id' to find the flight by primary key
+        .then((flight) => {
             if (flight) {
-                res.status(200).json(flight);
+                res.status(200).json(flight); // Return the flight if found
             } else {
-                res.status(404).json({ message: "Flight not found" });
+                res.status(404).json({ message: "Flight not found" }); // Handle not found case
             }
+        })
+        .catch((error) => {
+            res.status(500).json({ message: "An error occurred", error }); // Handle errors
         });
-    };
 };
+
 
 exports.searchAPI = async (req, res) => {
     const { source_airport_code,
@@ -69,22 +74,20 @@ exports.searchAPI = async (req, res) => {
         arrival_time,
         class_type, } = req.body;
 
-
     const searchBody = await Flight.findAll({
         where: {
-            [Op.or]:
-                [
-                    { airline_name: airline_name },
-                    { arrival_time: arrival_time },
-                    { class_type: class_type },
-                    { departure_time: departure_time },
-                    { destination_airport_code: destination_airport_code },
-                    { source_airport_code: source_airport_code }
-                ]
-
+            [Op.or]: [
+                { airline_name: airline_name },
+                { arrival_time: arrival_time },
+                { class_type: { [Op.eq]: class_type } }, // Enforce case sensitivity
+                { departure_time: departure_time },
+                { destination_airport_code: destination_airport_code },
+                { source_airport_code: source_airport_code }
+            ]
 
         }
     });
+
     if (!searchBody) {
         return res.status(404).json({ error: "Flight not found " })
     }
