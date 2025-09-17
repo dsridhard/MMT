@@ -1,19 +1,22 @@
-const { Passenger_Info } = require('../../models');
+const { Passenger_Info } = require("../../models");
 
 // Create a passenger
 exports.create = async (req, res) => {
     try {
-        const { booking_id, full_name, age, gender, seating_number } = req.body;
-
-        const passenger = await Passenger_Info.create({
-            booking_id,
-            full_name,
-            age,
-            gender,
-            seating_number
-        });
-
-        res.status(201).json(passenger);
+        let pax_info;
+        if (Array.isArray(req.body)) {
+            pax_info = await Passenger_Info.bulkCreate(req.body, { validate: true });
+        } else {
+            const { booking_id, full_name, age, gender, seating_number } = req.body;
+            pax_info = await Passenger_Info.create({
+                booking_id,
+                full_name,
+                age,
+                gender,
+                seating_number,
+            });
+        }
+        return res.status(201).json(pax_info);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
